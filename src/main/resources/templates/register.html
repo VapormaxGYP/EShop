@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>this is the register page</p>
+<form id="register" action="/user/register" method="post">
+    <table>
+        <tr>
+            <td>
+                用户姓名:
+            </td>
+            <td>
+                <input type="text" value="" name="username" required>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                登陆用户名字:
+            </td>
+            <td>
+                <input type="text" value="" name="loginname" class="l_user" pattern="^[A-Za-z0-9]+$" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                密码:
+            </td>
+            <td>
+                <input type="text" value="" name="password" class="l_user" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="radio" name="gender" value="0" checked="checked"> Female
+                <input type="radio" name="gender" value="1" > Male
+            </td>
+        </tr>
+
+        <tr>
+            <td>电话:</td>
+            <td>
+                <input type="text" value="" name="phone" class="l_tel" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>e-mail</td>
+            <td>
+                <input type="text" value="" name="emailAdd" required>
+            </td>
+        </tr>
+        <tr height="60">
+            <td>
+                <button type="submit" value="立即注册" class="log_btn"></button>
+            </td>
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>
