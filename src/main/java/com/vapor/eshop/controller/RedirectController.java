@@ -1,4 +1,4 @@
-package com.vapor.eshop;
+package com.vapor.eshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,9 @@
 package com.vapor.eshop.service;
 
+import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.vapor.eshop.form.UserLoginForm;
 
 /**
  * <p>
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-08-01
  */
 public interface UserService extends IService<User> {
+
+    public Result userLogin(UserLoginForm userLoginForm);
 
 }
