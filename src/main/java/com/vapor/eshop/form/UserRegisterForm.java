@@ -4,24 +4,25 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
+
 @Data
 public class UserRegisterForm {
 
-    @NotEmpty(message = "UserName can not be Empty")
+    @NotEmpty(message = "Empty UserName")
     private String username;
 
-    @NotEmpty(message = "LoginName can not be Empty")
+    @NotEmpty(message = "Empty loginName")
     private String loginname;
 
-    @NotEmpty(message = "Password can not be Empty")
+    @NotEmpty(message = "Empty password")
     private String password;
 
-    @NotNull(message = "Gender can not be Empty")
+    @NotNull(message = "Empty Gender")
     private Integer gender;
 
-    @NotEmpty(message = "Phone can not be Empty")
+    @NotEmpty(message = "Empty Phone")
     private String phone;
 
-    @NotEmpty(message = "Email can not be Empty")
+    @NotEmpty(message = "Empty Email Address")
     private String emailAdd;
 }

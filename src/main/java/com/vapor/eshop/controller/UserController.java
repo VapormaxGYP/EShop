@@ -15,12 +15,14 @@ import com.vapor.eshop.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -39,8 +41,21 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public Result<?> loginResult(@RequestBody UserLoginForm userLoginForm){
+    public Result<?> loginResult(@Valid @RequestBody UserLoginForm userLoginForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new EshopException(ResponseEnum.LOGIN_INFO_EMPTY);
+        }
         return userService.userLogin(userLoginForm);
+    }
+
+    @PostMapping("/register")
+    public Result<?> registerResult(@Valid @RequestBody UserRegisterForm userRegisterForm, BindingResult bindingResult){
+        System.out.println(userRegisterForm.toString());
+        if(bindingResult.hasErrors()){
+            throw new EshopException(ResponseEnum.REGISTER_INFO_EMPTY);
+        }
+
+        return userService.userRegister(userRegisterForm);
     }
 
     @GetMapping("/test")

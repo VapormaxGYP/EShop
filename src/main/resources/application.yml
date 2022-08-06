@@ -10,3 +10,5 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/vapor/eshop/mapper/xml/*.xml
 
+server:
+  port: 9090

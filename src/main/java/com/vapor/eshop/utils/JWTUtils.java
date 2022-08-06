@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.vapor.eshop.errors.ResponseEnum;
+import com.vapor.eshop.exception.EshopException;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -16,7 +18,7 @@ public class JWTUtils {
      * Generate Token
      * @param map:claim body
      */
-    public static String getToken(Map<String, ?> map) throws Exception{
+    public static String getToken(Map<String, ?> map){
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.DATE, 7);
 
@@ -25,6 +27,8 @@ public class JWTUtils {
                 .withExpiresAt(instance.getTime())
                 .sign(Algorithm.HMAC256(signKey));
 
+        if(jwtToken == null || jwtToken == "")
+            throw new EshopException(ResponseEnum.TOKEN_GENERATE_ERROR);
         return jwtToken;
     }
 
