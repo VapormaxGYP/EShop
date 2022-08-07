@@ -1,6 +1,5 @@
 package com.vapor.eshop.exception;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.errors.ResponseEnum;
 import org.springframework.web.bind.annotation.ExceptionHandler;
