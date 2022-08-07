@@ -9,9 +9,9 @@ pipeline {
                 sh "mvn clean test package spring-boot:repackage"
             }
         }
-        stage('Deliver') {
+        stage('Deploy') {
             steps {
-                sh './deploy.sh'
+                sh './Deploy.sh'
             }
         }
     }
