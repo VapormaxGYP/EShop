@@ -2,7 +2,7 @@
 set -e
 
 BASE_PATH=./target
-SERVER_NAME=eshop-0.0.1-SNAPSHOT.jar
+SERVER_NAME=eshop-0.0.1-SNAPSHOT
 
 JAVA_OPS="-Xms1024m -Xmx1024m"
 
