@@ -24,9 +24,9 @@ public class ExceptHandler {
     @ExceptionHandler(Exception.class)
     public Result<?> ExceptionHandler(Exception e){
         Result<Object> result = new Result<>();
-        result.setCode(e.hashCode());
-        result.setMsg(e.getMessage());
-
+        result.setCode(500);
+        result.setMsg("系统错误");
+        result.setDetail(e);
         return result;
     }
 
