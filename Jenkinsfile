@@ -12,7 +12,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'chmod +x ./Deploy.sh'
-                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+                withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
                     sh './Deploy.sh'
                 }
             }
