@@ -45,7 +45,7 @@ function start() {
     echo "[start] JAVA_OPS: $JAVA_OPS"
     source /etc/profile
     export JENKINS_NODE_COOKIE=dontKillMe
-    nohup java -Dhudson.util.ProcessTree.disable=true -jar $BASE_PATH/$SERVER_NAME.jar >/dev/null 2>log &
+    nohup java -Dhudson.util.ProcessTree.disable=true -jar $BASE_PATH/$SERVER_NAME.jar >/dev/null 2> /log/logs &
     echo "[start] 启动 $BASE_PATH/$SERVER_NAME.jar 完成 [$JENKINS_NODE_COOKIE]"
 }
 
