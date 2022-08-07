@@ -40,7 +40,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         generateMenu(productCategoryVOList);
 
         result.setCode(200);
-        result.setMsg("Success");
+        result.setMsg("hhh");
         result.setDetail(productCategoryVOList);
 
         return result;
