@@ -23,7 +23,7 @@ public class ExceptHandler {
 
     @ExceptionHandler(Exception.class)
     public Result<?> ExceptionHandler(Exception e){
-        //generate exception first
+        //generate exception second
         Result<Object> result = new Result<>();
         result.setCode(501);
         result.setMsg("System Error");
