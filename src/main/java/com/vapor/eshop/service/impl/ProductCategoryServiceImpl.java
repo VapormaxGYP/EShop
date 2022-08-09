@@ -41,7 +41,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
 
         result.setCode(200);
         result.setMsg("Success");
-        result.setDetail(productCategoryVOList);
+        result.setData(productCategoryVOList);
 
         return result;
     }

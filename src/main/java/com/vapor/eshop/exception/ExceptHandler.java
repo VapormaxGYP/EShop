@@ -6,9 +6,8 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.errors.ResponseEnum;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.ModelAndView;
+
 
 @RestControllerAdvice("com.vapor.eshop")
 public class ExceptHandler {

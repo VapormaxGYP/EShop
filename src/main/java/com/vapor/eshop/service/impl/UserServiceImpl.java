@@ -40,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq("LoginName", userLoginForm.getLoginname());
 
         User user = this.userMapper.selectOne(queryWrapper);
-        Result<User> result = new Result<>();
+        Result<Object> result = new Result<>();
         if(user == null)
         {
             throw new EshopException(ResponseEnum.LOGIN_NAME_NOT_EXIST);
@@ -55,18 +55,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         Map<String, Object> map = new HashMap<>();
         map.put("userid", user.getUserid());
-        map.put("username", user.getUsername());
-        map.put("loginname", user.getLoginname());
-        map.put("gender", user.getGender());
-        map.put("phone", user.getPhone());
-        map.put("emailAdd", user.getEmailAdd());
         String token;
-
         token = JWTUtils.getToken(map);
 
+        Map<String, String> dataMap = new HashMap<>();
+        dataMap.put("JWT", token);
         result.setCode(200);
-        result.setMsg(token);
-        result.setDetail(user);
+        result.setMsg("Login Success");
+        result.setData(dataMap);
 
         return result;
     }
@@ -104,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         result.setCode(200);
         result.setMsg("Register Success");
-        result.setDetail(insertUser);
+        result.setData(insertUser);
 
         return result;
     }
