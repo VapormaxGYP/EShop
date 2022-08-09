@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 public class UserRegisterForm {
 
     @NotEmpty(message = "Empty UserName")
-    private String username;
+    private String userName;
 
     @NotEmpty(message = "Empty loginName")
-    private String loginname;
+    private String loginName;
 
     @NotEmpty(message = "Empty password")
     private String password;

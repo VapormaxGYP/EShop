@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.junit.jupiter.api.Test;
 
-public class mybatisgenerator {
+public class MybatisGenerator {
 
     @Test
     public void run(){
@@ -29,7 +29,7 @@ public class mybatisgenerator {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL);
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/EShop?useUnicode=true&characterEncoding=UTF-8");
+        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/EShop");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("We9654rt");
         autoGenerator.setDataSource(dataSourceConfig);

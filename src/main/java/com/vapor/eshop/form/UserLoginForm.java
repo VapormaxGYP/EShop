@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UserLoginForm {
 
     @NotEmpty(message = "Empty LoginName")
-    private String loginname;
+    private String loginName;
 
     @NotEmpty(message = "Empty Password")
     private String password;

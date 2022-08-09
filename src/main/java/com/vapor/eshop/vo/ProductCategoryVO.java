@@ -8,18 +8,18 @@ import java.util.List;
 @Data
 public class ProductCategoryVO {
 
-    private Integer id;
-    private String name;
-    private Integer parentid;
-    private Integer level;
+    private Integer kindId;
+    private String kindName;
+    private Integer parentId;
+    private Integer kindLevel;
 
     private List<ProductCategoryVO> children;
 
     public ProductCategoryVO(ProductCategory productCategory) {
-        this.id = productCategory.getId();
-        this.name = productCategory.getName();
-        this.parentid = productCategory.getParentId();
-        this.level = productCategory.getLevel();
+        this.kindId = productCategory.getKindId();
+        this.kindName = productCategory.getKindName();
+        this.parentId = productCategory.getParentId();
+        this.kindLevel = productCategory.getKindLevel();
     }
 
 }
