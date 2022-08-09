@@ -27,7 +27,7 @@ public class JWTUtils {
                 .withExpiresAt(instance.getTime())
                 .sign(Algorithm.HMAC256(signKey));
 
-        if(jwtToken == null || jwtToken == "")
+        if(jwtToken == null || jwtToken.equals(""))
             throw new EshopException(ResponseEnum.TOKEN_GENERATE_ERROR);
         return jwtToken;
     }

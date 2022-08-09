@@ -8,7 +8,8 @@ public enum ResponseEnum {
     USER_EXIST_ERROR(305, "User already Exist"),
     EMAIL_ERROR(306, "Email Form Error"),
     REGISTER_ERROR(308, "Register Error"),
-    REGISTER_INFO_EMPTY(309, "Register Form has Empty info");
+    REGISTER_INFO_EMPTY(309, "Register Form has Empty info"),
+    EMPTY_JWT(443, "Empty JWT");
     private Integer code;
     private String msg;
 

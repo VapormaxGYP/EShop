@@ -1,9 +1,11 @@
 package com.vapor.eshop.controller;
 
 
+import com.vapor.eshop.service.ProductInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,9 +15,14 @@ import org.springframework.stereotype.Controller;
  * @author Vapor
  * @since 2022-08-01
  */
-@Controller
+@RestController
 @RequestMapping("/productInfo")
 public class ProductInfoController {
+
+    @Autowired
+    private ProductInfoService productInfoService;
+
+
 
 }
 

@@ -1,16 +1,14 @@
 package com.vapor.eshop.Interceptors;
 
-import com.auth0.jwt.exceptions.AlgorithmMismatchException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.vapor.eshop.errors.ResponseEnum;
+import com.vapor.eshop.exception.EshopException;
 import com.vapor.eshop.utils.JWTUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class JWTInterceptor implements HandlerInterceptor {
     @Override
@@ -18,30 +16,10 @@ public class JWTInterceptor implements HandlerInterceptor {
 
         //get token from HTTP Header param "Authorization"
         String token = request.getHeader("Authorization");
+        if(token == null)
+            throw new EshopException(ResponseEnum.EMPTY_JWT);
 
-        Map<String, Object> map = new HashMap<>();
-        try{
-            JWTUtils.verify(token);
-            return true;
-        } catch (SignatureVerificationException e){
-            e.printStackTrace();
-            map.put("msg", "Invalid Signature");
-        } catch (TokenExpiredException e){
-            e.printStackTrace();
-            map.put("msg", "Expired Token");
-        } catch (AlgorithmMismatchException e){
-            e.printStackTrace();
-            map.put("msg", "Algorithm MisMatch");
-        } catch (Exception e){
-            e.printStackTrace();
-            map.put("msg", "Invalid Token");
-        }
-
-        map.put("State", false);
-        String resJson = new ObjectMapper().writeValueAsString(map);
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().println(resJson);
-
-        return false;
+        DecodedJWT decodedJWT = JWTUtils.verify(token);
+        return decodedJWT != null;
     }
 }
