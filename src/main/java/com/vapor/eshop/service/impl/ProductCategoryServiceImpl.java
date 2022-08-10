@@ -1,11 +1,11 @@
 package com.vapor.eshop.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vapor.eshop.entity.ProductCategory;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.mapper.ProductCategoryMapper;
 import com.vapor.eshop.service.ProductCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.vapor.eshop.vo.ProductCategoryTemp;
 import com.vapor.eshop.vo.ProductCategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -35,51 +36,69 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         //get all product category
         List<ProductCategory> list = this.productCategoryMapper.selectList(null);
 
-        List<ProductCategoryVO> voList = list.stream().map(ProductCategoryVO::new).collect(Collectors.toList());
+        List<ProductCategoryTemp> tmpList = list.stream().map(ProductCategoryTemp::new).collect(Collectors.toList());
+        List<ProductCategoryVO> resList = tmpList.stream().map(ProductCategoryVO::new).collect(Collectors.toList());
 
+        GenerateMenu(tmpList);
+        SetVO(tmpList, resList);
 
-        GenerateMenu(voList);
         result.setCode(0);
         result.setMsg("Success Generate Category");
-        result.setData(voList);
+        result.setData(resList);
 
         return result;
     }
 
-    public void GenerateMenu(List<ProductCategoryVO> voList){
-        List<ProductCategoryVO> levelOneList = voList.stream()
-                .filter(productCategoryVO -> productCategoryVO.getKindLevel() == 0)
+    public void SetVO(List<ProductCategoryTemp> tempList, List<ProductCategoryVO> voList){
+        if(tempList.size() == 0)
+            return;
+        Iterator<ProductCategoryTemp> iteratorTmp = tempList.iterator();
+        Iterator<ProductCategoryVO> iteratorVo = voList.iterator();
+        while (iteratorTmp.hasNext() && iteratorVo.hasNext()) {
+            ProductCategoryTemp nextTmp = iteratorTmp.next();
+            ProductCategoryVO nextVo = iteratorVo.next();
+
+            List<ProductCategoryTemp> children = nextTmp.getChildren();
+            List<ProductCategoryVO> childrenVO = children.stream().map(ProductCategoryVO::new).collect(Collectors.toList());
+            nextVo.setChildren(childrenVO);
+
+            SetVO(children, childrenVO);
+        }
+    }
+
+    public void GenerateMenu(List<ProductCategoryTemp> tmpList){
+        List<ProductCategoryTemp> levelOneList = tmpList.stream()
+                .filter(productCategoryTemp -> productCategoryTemp.getLevel() == 0)
                 .collect(Collectors.toList());
 
-        Iterator<ProductCategoryVO> iterator = levelOneList.iterator();
+        Iterator<ProductCategoryTemp> iterator = levelOneList.iterator();
         while (iterator.hasNext()) {
-            ProductCategoryVO next = iterator.next();
-            recursion(voList, next);
+            ProductCategoryTemp nextTmp = iterator.next();
+            recursion(tmpList, nextTmp);
         }
     }
 
-    public void recursion(List<ProductCategoryVO> voList, ProductCategoryVO productCategoryVO){
-        List<ProductCategoryVO> children = getChildren(voList, productCategoryVO);
-        productCategoryVO.setChildren(children);
+    public void recursion(List<ProductCategoryTemp> tmpList, ProductCategoryTemp productCategoryTemp){
+        List<ProductCategoryTemp> children = getChildren(tmpList, productCategoryTemp);
+        productCategoryTemp.setChildren(children);
 
         if(children.size() > 0){
-            Iterator<ProductCategoryVO> iterator = children.iterator();
+            Iterator<ProductCategoryTemp> iterator = children.iterator();
             while (iterator.hasNext()) {
-                ProductCategoryVO next = iterator.next();
-                recursion(voList, next);
+                ProductCategoryTemp tmp = iterator.next();
+                recursion(tmpList, tmp);
             }
-
         }
 
     }
 
-    public List<ProductCategoryVO> getChildren(List<ProductCategoryVO> voList, ProductCategoryVO productCategoryVO){
-        List<ProductCategoryVO> children = new ArrayList<>();
+    public List<ProductCategoryTemp> getChildren(List<ProductCategoryTemp> voList, ProductCategoryTemp productCategoryTemp){
+        List<ProductCategoryTemp> children = new ArrayList<>();
 
-        Iterator<ProductCategoryVO> iterator = voList.iterator();
+        Iterator<ProductCategoryTemp> iterator = voList.iterator();
         while (iterator.hasNext()) {
-            ProductCategoryVO tmp = iterator.next();
-            if(tmp.getParentId() == productCategoryVO.getKindId())
+            ProductCategoryTemp tmp = iterator.next();
+            if(Objects.equals(tmp.getParentId(), productCategoryTemp.getKey()))
                 children.add(tmp);
         }
 
