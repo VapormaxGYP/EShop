@@ -9,7 +9,9 @@ public enum ResponseEnum {
     EMAIL_ERROR(306, "Email Form Error"),
     REGISTER_ERROR(308, "Register Error"),
     REGISTER_INFO_EMPTY(309, "Register Form has Empty info"),
-    EMPTY_JWT(443, "Empty JWT");
+    EMPTY_JWT(443, "Empty JWT"),
+    PAGE_INFO_EMPTY(444, "Empty PageNum or PageSize"),
+    GET_PRODUCT_INFO_FORM_EMPTY(445, "Empty Info in Get Product");
     private Integer code;
     private String msg;
 
