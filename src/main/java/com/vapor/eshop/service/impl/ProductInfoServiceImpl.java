@@ -35,6 +35,9 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 
     @Override
     public Result<?> getProductList(GetProductInfoForm productInfoForm) {
+
+        Result<List<ProductInfoListVO>> result = new Result<>();
+
         if(productInfoForm == null)
             throw new EshopException(ResponseEnum.GET_PRODUCT_INFO_FORM_EMPTY);
         Integer pageNum = productInfoForm.getPageNum();
@@ -48,8 +51,20 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 
         Page<ProductInfo> page = new Page<>(pageNum, pageSize);
 
-        QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("product_name", keyword)
+        if(keyword == null && categoryId == null){
+            List<ProductInfo> productInfoAll = productInfoMapper.selectPage(page, null).getRecords();
+            List<ProductInfoListVO> productInfoListVOListAll = productInfoAll.stream()
+                    .map(ProductInfoListVO::new).collect(Collectors.toList());
+
+            result.setCode(0);
+            result.setMsg("Success Get Product info");
+            result.setData(productInfoListVOListAll);
+
+            return result;
+        }
+
+        QueryWrapper<ProductInfo> queryWrapperCondition = new QueryWrapper<>();
+        queryWrapperCondition.like("product_name", keyword)
                 .or()
                 .eq("category_0_ID", categoryId)
                 .or()
@@ -57,13 +72,21 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
                 .or()
                 .eq("category_2_ID", categoryId);
 
-        List<ProductInfo> productList = productInfoMapper.selectPage(page, queryWrapper).getRecords();
+        List<ProductInfo> productList = productInfoMapper.selectPage(page, queryWrapperCondition).getRecords();
         List<ProductInfoListVO> productInfoListVOList = productList.stream().map(ProductInfoListVO::new).collect(Collectors.toList());
 
-        Result<List<ProductInfoListVO>> result = new Result<>();
-        result.setCode(0);
-        result.setMsg("Success Get Product List");
-        result.setData(productInfoListVOList);
+        if(productInfoListVOList.isEmpty())
+        {
+            result.setCode(500);
+            result.setMsg("No Such Product");
+            result.setData(productInfoListVOList);
+        }
+        else
+        {
+            result.setCode(0);
+            result.setMsg("Success get Product List");
+            result.setData(productInfoListVOList);
+        }
         return result;
     }
 }
