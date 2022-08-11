@@ -64,13 +64,14 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
         }
 
         QueryWrapper<ProductInfo> queryWrapperCondition = new QueryWrapper<>();
+        //queryWrapperCondition.like("product_name", keyword);
         queryWrapperCondition.like("product_name", keyword)
-                .or()
-                .eq("category_0_ID", categoryId)
-                .or()
-                .eq("category_1_ID", categoryId)
-                .or()
-                .eq("category_2_ID", categoryId);
+                .and(wrapper -> wrapper.eq("category_0_ID", categoryId)
+                        .or()
+                        .eq("category_1_ID", categoryId)
+                        .or()
+                        .eq("category_2_ID", categoryId));
+
 
         List<ProductInfo> productList = productInfoMapper.selectPage(page, queryWrapperCondition).getRecords();
         List<ProductInfoListVO> productInfoListVOList = productList.stream().map(ProductInfoListVO::new).collect(Collectors.toList());
