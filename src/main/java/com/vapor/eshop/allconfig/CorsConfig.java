@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Cors Config
  */
 
+/*
 @Configuration
 
 public class CorsConfig implements WebMvcConfigurer {
@@ -24,3 +25,5 @@ public class CorsConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 }
+
+ */
