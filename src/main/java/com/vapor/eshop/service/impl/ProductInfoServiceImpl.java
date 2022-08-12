@@ -11,6 +11,7 @@ import com.vapor.eshop.form.GetProductInfoForm;
 import com.vapor.eshop.mapper.ProductInfoMapper;
 import com.vapor.eshop.service.ProductInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.vapor.eshop.vo.ProductDetailVO;
 import com.vapor.eshop.vo.ProductInfoListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,7 +112,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 
         if(productInfoListVOList.isEmpty())
         {
-            result.setCode(490);
+            result.setCode(0);
             result.setMsg("No Such Product");
             result.setData(productInfoListVOList);
         }
@@ -121,6 +122,25 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
             result.setMsg("Success get Product List");
             result.setData(productInfoListVOList);
         }
+        return result;
+    }
+
+    @Override
+    public Result<?> getProductInfo(Integer productId) {
+        if(productId == null)
+            throw new EshopException(ResponseEnum.EMPTY_PRODUCT_ID);
+
+        Result<ProductDetailVO> result = new Result<>();
+
+        QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("product_id", productId);
+
+        ProductInfo productInfo = this.productInfoMapper.selectOne(queryWrapper);
+        ProductDetailVO productDetailVO = new ProductDetailVO(productInfo);
+
+        result.setCode(0);
+        result.setMsg("Success Get Product Detail");
+        result.setData(productDetailVO);
         return result;
     }
 }

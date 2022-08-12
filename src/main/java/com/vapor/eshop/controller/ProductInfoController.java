@@ -7,11 +7,7 @@ import com.vapor.eshop.form.GetProductInfoForm;
 import com.vapor.eshop.service.ProductInfoService;
 import com.vapor.eshop.vo.ProductInfoListVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -32,6 +28,11 @@ public class ProductInfoController {
 
         Page<ProductInfoListVO> productInfoListVOPage = new Page<>();
         return productInfoService.getProductList(infoForm);
+    }
+
+    @GetMapping("/productDetail")
+    public Result<?> getProductDetail(@RequestParam("key") Integer productId){
+        return productInfoService.getProductInfo(productId);
     }
 
 

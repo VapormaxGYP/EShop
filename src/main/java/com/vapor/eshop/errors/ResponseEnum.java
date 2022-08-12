@@ -11,7 +11,8 @@ public enum ResponseEnum {
     REGISTER_INFO_EMPTY(309, "Register Form has Empty info"),
     EMPTY_JWT(443, "Empty JWT"),
     PAGE_INFO_EMPTY(444, "Empty PageNum or PageSize"),
-    GET_PRODUCT_INFO_FORM_EMPTY(445, "Empty Info in Get Product");
+    GET_PRODUCT_INFO_FORM_EMPTY(445, "Empty Info in Get Product"),
+    EMPTY_PRODUCT_ID(446, "Empty Product ID");
     private Integer code;
     private String msg;
 

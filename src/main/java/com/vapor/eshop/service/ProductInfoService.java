@@ -16,5 +16,6 @@ import com.vapor.eshop.form.GetProductInfoForm;
 public interface ProductInfoService extends IService<ProductInfo> {
 
     public Result<?> getProductList(GetProductInfoForm productInfoForm);
+    public Result<?> getProductInfo(Integer productId);
 
 }
