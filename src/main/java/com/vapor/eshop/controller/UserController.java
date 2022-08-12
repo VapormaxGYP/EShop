@@ -45,6 +45,7 @@ public class UserController {
         return userService.userRegister(userRegisterForm);
     }
 
+    @CrossOrigin
     @GetMapping("/getUserDetails")
     public Result<?> getUserInfo(@RequestHeader("Authorization") String jwt){
         return userService.getUserDetails(jwt);
