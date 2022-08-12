@@ -30,8 +30,8 @@ public class ProductInfoController {
         return productInfoService.getProductList(infoForm);
     }
 
-    @GetMapping("/productDetail")
-    public Result<?> getProductDetail(@RequestParam("key") Integer productId){
+    @GetMapping("/productDetails")
+    public Result<?> getProductDetail(@RequestParam("productId") Integer productId){
         return productInfoService.getProductInfo(productId);
     }
 

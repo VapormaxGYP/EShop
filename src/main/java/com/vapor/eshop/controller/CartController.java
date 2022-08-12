@@ -4,6 +4,7 @@ package com.vapor.eshop.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Controller;
  * @author Vapor
  * @since 2022-08-10
  */
-@Controller
-@RequestMapping("//cart")
+@RestController
+@RequestMapping("/cart")
 public class CartController {
 
 }
