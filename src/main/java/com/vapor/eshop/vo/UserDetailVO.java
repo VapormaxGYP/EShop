@@ -7,14 +7,16 @@ import lombok.Data;
 public class UserDetailVO {
 
     private Integer uid;
-    private String name;
+    private String loginName;
+    private String userName;
     private Integer gender;
     private String phone;
     private String email;
 
     public UserDetailVO(User user){
         this.uid = user.getUserId();
-        this.name = user.getLoginName();
+        this.loginName = user.getLoginName();
+        this.userName = user.getUserName();
         this.gender = user.getGender();
         this.phone = user.getPhone();
         this.email = user.getEmailAdd();
