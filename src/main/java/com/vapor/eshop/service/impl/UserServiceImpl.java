@@ -1,5 +1,6 @@
 package com.vapor.eshop.service.impl;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.entity.User;
@@ -12,6 +13,7 @@ import com.vapor.eshop.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vapor.eshop.utils.JWTUtils;
 import com.vapor.eshop.utils.RegexValidUtils;
+import com.vapor.eshop.vo.UserDetailVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,6 +93,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         result.setCode(0);
         result.setMsg("Register Success");
+
+        return result;
+    }
+
+    @Override
+    public Result<?> getUserDetails(String jwt) {
+
+        Map<String, Claim> claims = JWTUtils.verifyAndGetClaims(jwt);
+        Integer userID = claims.get("userId").asInt();
+        String loginName = claims.get("loginName").asString();
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userID);
+        User user = this.userMapper.selectOne(queryWrapper);
+
+        UserDetailVO userDetailVO = new UserDetailVO(user);
+
+        Result<UserDetailVO> result = new Result<>();
+        result.setCode(0);
+        result.setMsg("Success Get User Detail Info");
+        result.setData(userDetailVO);
 
         return result;
     }

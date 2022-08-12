@@ -18,5 +18,6 @@ public interface UserService extends IService<User> {
 
     public Result<?> userLogin(UserLoginForm userLoginForm);
     public Result<?> userRegister(UserRegisterForm userRegisterForm);
+    public Result<?> getUserDetails(String jwt);
 
 }

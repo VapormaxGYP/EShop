@@ -12,6 +12,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new JWTInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/register");
+                .excludePathPatterns("/user/register")
+                .excludePathPatterns("/productInfo/**")
+                .excludePathPatterns("/productCategory/**");
     }
 }

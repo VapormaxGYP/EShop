@@ -9,10 +9,7 @@ import com.vapor.eshop.form.UserRegisterForm;
 import com.vapor.eshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -41,12 +38,16 @@ public class UserController {
 
     @PostMapping("/register")
     public Result<?> registerResult(@Valid @RequestBody UserRegisterForm userRegisterForm, BindingResult bindingResult){
-        System.out.println(userRegisterForm.toString());
         if(bindingResult.hasErrors()){
             throw new EshopException(ResponseEnum.REGISTER_INFO_EMPTY);
         }
 
         return userService.userRegister(userRegisterForm);
+    }
+
+    @GetMapping("/getUserDetails")
+    public Result<?> getUserInfo(@RequestHeader("Authorization") String jwt){
+        return userService.getUserDetails(jwt);
     }
 
 
