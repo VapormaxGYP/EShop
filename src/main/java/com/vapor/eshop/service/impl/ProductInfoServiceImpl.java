@@ -63,6 +63,39 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
             return result;
         }
 
+        if(keyword == null){
+            QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("category_0_ID", categoryId)
+                    .or()
+                    .eq("category_1_ID", categoryId)
+                    .or()
+                    .eq("category_2_ID", categoryId);
+            List<ProductInfo> productInfos = this.productInfoMapper.selectPage(page,queryWrapper).getRecords();
+            List<ProductInfoListVO> productInfoListVOList = productInfos.stream()
+                    .map(ProductInfoListVO::new)
+                    .collect(Collectors.toList());
+
+            result.setCode(0);
+            result.setMsg("Success Get Product info");
+            result.setData(productInfoListVOList);
+            return result;
+        }
+
+        if(categoryId == null){
+            QueryWrapper<ProductInfo> queryWrapper = new QueryWrapper<>();
+            queryWrapper.like("product_name", keyword);
+
+            List<ProductInfo> productInfos = this.productInfoMapper.selectPage(page, queryWrapper).getRecords();
+            List<ProductInfoListVO> productInfoListVOList = productInfos.stream()
+                    .map(ProductInfoListVO::new)
+                    .collect(Collectors.toList());
+
+            result.setCode(0);
+            result.setMsg("Success Get Product info");
+            result.setData(productInfoListVOList);
+            return result;
+        }
+
         QueryWrapper<ProductInfo> queryWrapperCondition = new QueryWrapper<>();
         //queryWrapperCondition.like("product_name", keyword);
         queryWrapperCondition.like("product_name", keyword)
@@ -78,7 +111,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 
         if(productInfoListVOList.isEmpty())
         {
-            result.setCode(500);
+            result.setCode(490);
             result.setMsg("No Such Product");
             result.setData(productInfoListVOList);
         }
