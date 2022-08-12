@@ -37,7 +37,9 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         List<ProductCategory> list = this.productCategoryMapper.selectList(null);
 
         List<ProductCategoryTemp> tmpList = list.stream().map(ProductCategoryTemp::new).collect(Collectors.toList());
-        List<ProductCategoryVO> resList = tmpList.stream().map(ProductCategoryVO::new).collect(Collectors.toList());
+        List<ProductCategoryVO> resList = tmpList.stream().filter(tmp -> tmp.getLevel() == 0)
+                .map(ProductCategoryVO::new)
+                .collect(Collectors.toList());
 
         GenerateMenu(tmpList);
         SetVO(tmpList, resList);
