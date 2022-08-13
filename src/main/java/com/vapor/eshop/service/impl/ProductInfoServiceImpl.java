@@ -3,6 +3,7 @@ package com.vapor.eshop.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.vapor.eshop.DO.ProductInfoListDO;
 import com.vapor.eshop.entity.ProductInfo;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.errors.ResponseEnum;
@@ -37,7 +38,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
     @Override
     public Result<?> getProductList(GetProductInfoForm productInfoForm) {
 
-        Result<List<ProductInfoListVO>> result = new Result<>();
+        Result<ProductInfoListVO> result = new Result<>();
 
         if(productInfoForm == null)
             throw new EshopException(ResponseEnum.GET_PRODUCT_INFO_FORM_EMPTY);
@@ -54,12 +55,14 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 
         if(keyword == null && categoryId == null){
             List<ProductInfo> productInfoAll = productInfoMapper.selectPage(page, null).getRecords();
-            List<ProductInfoListVO> productInfoListVOListAll = productInfoAll.stream()
-                    .map(ProductInfoListVO::new).collect(Collectors.toList());
-
+            List<ProductInfoListDO> productInfoListDOListAll = productInfoAll.stream()
+                    .map(ProductInfoListDO::new).collect(Collectors.toList());
+            Long totalPages = page.getPages();
+            Long totalItems = page.getTotal();
+            ProductInfoListVO productInfoListVO = new ProductInfoListVO(productInfoListDOListAll, totalPages,totalItems);
             result.setCode(0);
             result.setMsg("Success Get Product info");
-            result.setData(productInfoListVOListAll);
+            result.setData(productInfoListVO);
 
             return result;
         }
@@ -71,14 +74,22 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
                     .eq("category_1_ID", categoryId)
                     .or()
                     .eq("category_2_ID", categoryId);
+
+
+
             List<ProductInfo> productInfos = this.productInfoMapper.selectPage(page,queryWrapper).getRecords();
-            List<ProductInfoListVO> productInfoListVOList = productInfos.stream()
-                    .map(ProductInfoListVO::new)
+            List<ProductInfoListDO> productInfoListDOList = productInfos.stream()
+                    .map(ProductInfoListDO::new)
                     .collect(Collectors.toList());
+
+            Long totalPages = page.getPages();
+            Long totalItems = page.getTotal();
+
+            ProductInfoListVO productInfoListVO = new ProductInfoListVO(productInfoListDOList, totalPages, totalItems);
 
             result.setCode(0);
             result.setMsg("Success Get Product info");
-            result.setData(productInfoListVOList);
+            result.setData(productInfoListVO);
             return result;
         }
 
@@ -87,13 +98,15 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
             queryWrapper.like("product_name", keyword);
 
             List<ProductInfo> productInfos = this.productInfoMapper.selectPage(page, queryWrapper).getRecords();
-            List<ProductInfoListVO> productInfoListVOList = productInfos.stream()
-                    .map(ProductInfoListVO::new)
+            List<ProductInfoListDO> productInfoListDOList = productInfos.stream()
+                    .map(ProductInfoListDO::new)
                     .collect(Collectors.toList());
-
+            Long totalPages = page.getPages();
+            Long totalItems = page.getTotal();
+            ProductInfoListVO productInfoListVO = new ProductInfoListVO(productInfoListDOList, totalPages, totalItems);
             result.setCode(0);
             result.setMsg("Success Get Product info");
-            result.setData(productInfoListVOList);
+            result.setData(productInfoListVO);
             return result;
         }
 
@@ -108,19 +121,22 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 
 
         List<ProductInfo> productList = productInfoMapper.selectPage(page, queryWrapperCondition).getRecords();
-        List<ProductInfoListVO> productInfoListVOList = productList.stream().map(ProductInfoListVO::new).collect(Collectors.toList());
+        List<ProductInfoListDO> productInfoListDOList = productList.stream().map(ProductInfoListDO::new).collect(Collectors.toList());
 
-        if(productInfoListVOList.isEmpty())
+        Long totalPages = page.getPages();
+        Long totalItems = page.getTotal();
+        ProductInfoListVO productInfoListVO = new ProductInfoListVO(productInfoListDOList, totalPages, totalItems);
+        if(productInfoListVO.getInfoList().isEmpty())
         {
             result.setCode(0);
             result.setMsg("No Such Product");
-            result.setData(productInfoListVOList);
+            result.setData(productInfoListVO);
         }
         else
         {
             result.setCode(0);
             result.setMsg("Success get Product List");
-            result.setData(productInfoListVOList);
+            result.setData(productInfoListVO);
         }
         return result;
     }

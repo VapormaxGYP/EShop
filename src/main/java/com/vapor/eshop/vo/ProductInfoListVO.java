@@ -1,24 +1,20 @@
 package com.vapor.eshop.vo;
 
+import com.vapor.eshop.DO.ProductInfoListDO;
 import com.vapor.eshop.entity.ProductInfo;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProductInfoListVO {
-    private Integer productId;
-    private String productName;
-    private String productDesc;
-    private Integer productPrice;
-    private Integer productStock;
-    private String productPicture;
+    private List<ProductInfoListDO> infoList;
+    private Long totalPages;
+    private Long totalItems;
 
-    public ProductInfoListVO(ProductInfo productInfo){
-        this.productId = productInfo.getProductId();
-        this.productName = productInfo.getProductName();
-        this.productDesc = productInfo.getProductDesc();
-        this.productPrice = productInfo.getProductPrice();
-        this.productStock = productInfo.getProductStock();
-        this.productPicture = productInfo.getProductPicture();
+    public ProductInfoListVO(List<ProductInfoListDO> infoList, Long totalPages, Long totalItems){
+        this.infoList = infoList;
+        this.totalItems = totalItems;
+        this.totalPages = totalPages;
     }
-
 }
