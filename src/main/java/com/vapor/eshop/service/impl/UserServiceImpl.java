@@ -101,11 +101,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result<?> getUserDetails(String jwt) {
 
         Map<String, Claim> claims = JWTUtils.verifyAndGetClaims(jwt);
-        Integer userID = claims.get("userId").asInt();
-        String loginName = claims.get("loginName").asString();
+        Integer userId = claims.get("userId").asInt();
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", userID);
+        queryWrapper.eq("user_id", userId);
         User user = this.userMapper.selectOne(queryWrapper);
 
         UserDetailVO userDetailVO = new UserDetailVO(user);

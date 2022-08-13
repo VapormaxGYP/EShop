@@ -12,7 +12,12 @@ public enum ResponseEnum {
     EMPTY_JWT(443, "Empty JWT"),
     PAGE_INFO_EMPTY(444, "Empty PageNum or PageSize"),
     GET_PRODUCT_INFO_FORM_EMPTY(445, "Empty Info in Get Product"),
-    EMPTY_PRODUCT_ID(446, "Empty Product ID");
+    EMPTY_PRODUCT_ID(446, "Empty Product ID"),
+    ADD_CART_ERROR(447, "Add Cart Error"),
+    OUT_OF_STOCK(448, "Count is Larger than Stock"),
+    PRODUCT_TO_CART_FORM_EMPTY(449, "Product Add to Cart form Empty"),
+    ILLEGAL_COUNT(450, "Count Number is Illegal"),
+    NO_SUCH_RECORD(451, "No Such Cart Record");
     private Integer code;
     private String msg;
 
