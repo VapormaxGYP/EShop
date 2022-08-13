@@ -5,10 +5,11 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.errors.ResponseEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
+@Slf4j
 @RestControllerAdvice("com.vapor.eshop")
 public class ExceptHandler {
 
@@ -53,6 +54,7 @@ public class ExceptHandler {
     @ExceptionHandler(Exception.class)
     public Result<?> ExceptionHandler(Exception e){
         //generate exception sixth
+        e.printStackTrace();
         Result<Object> responseResult = new Result<>();
         responseResult.setCode(501);
         responseResult.setMsg(e.getMessage());

@@ -16,6 +16,9 @@ import com.vapor.eshop.form.ProductToCartForm;
 public interface CartService extends IService<Cart> {
 
     public Result<?> AddToCart(String jwt, ProductToCartForm productToCartForm);
-    public Result<?> UpdateCart(String jwt, Integer cartId, Integer productId ,Integer count);
+    public Result<?> UpdateCart(String jwt, Integer productId ,Integer count);
+    public Result<?> getCartDetails(String jwt);
+
+    public Result<?> deleteCartRecord(String jwt, Integer productId);
 
 }
