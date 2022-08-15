@@ -41,8 +41,7 @@ public class HttpsConfig {
         connector.setScheme("http");
         connector.setPort(httpPort);
         connector.setSecure(false);
-        connector.setRedirectPort(httpsPort);
+        connector.setRedirectPort(3443);
         return connector;
     }
-
 }
