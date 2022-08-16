@@ -46,7 +46,7 @@ function start() {
     source /etc/profile
     export PATH="/opt/java/openjdk/bin":$PATH
     export JENKINS_NODE_COOKIE=dontKillMe
-    nohup java -Dhudson.util.ProcessTree.disable=true -jar $BASE_PATH/$SERVER_NAME.jar --spring.profiles.active=dev >/dev/null 2> /logs &
+    nohup java -Dhudson.util.ProcessTree.disable=true -jar $BASE_PATH/$SERVER_NAME.jar --spring.profiles.active=dev >/logs 2> /elogs &
     echo "[start] 启动 $BASE_PATH/$SERVER_NAME.jar 完成 [$JENKINS_NODE_COOKIE]"
 }
 
