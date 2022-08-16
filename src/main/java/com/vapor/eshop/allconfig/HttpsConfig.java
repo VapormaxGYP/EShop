@@ -18,8 +18,6 @@ public class HttpsConfig {
     @Value("${http.port}")
     private Integer httpPort;
 
-    @Value("${server.port}")
-    private Integer httpsPort;
     @Bean
     public ServletWebServerFactory servletContainer(){
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){

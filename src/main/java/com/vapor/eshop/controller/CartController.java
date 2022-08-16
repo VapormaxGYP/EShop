@@ -58,9 +58,9 @@ public class CartController {
     }
 
     @DeleteMapping("/deleteCartRecord")
-    public Result<?> deleteCartRecord(@RequestHeader("Authorization") String jwt, @RequestParam("productId") Integer productId){
+    public Result<?> deleteCartRecord(@RequestHeader("Authorization") String jwt, @RequestBody() Integer[] productIds){
 
-        return cartService.deleteCartRecord(jwt, productId);
+        return cartService.deleteCartRecord(jwt, productIds);
     }
 
 }

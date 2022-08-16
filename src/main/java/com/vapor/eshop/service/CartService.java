@@ -19,6 +19,6 @@ public interface CartService extends IService<Cart> {
     public Result<?> UpdateCart(String jwt, Integer productId ,Integer count);
     public Result<?> getCartDetails(String jwt);
 
-    public Result<?> deleteCartRecord(String jwt, Integer productId);
+    public Result<?> deleteCartRecord(String jwt, Integer[] productIds);
 
 }

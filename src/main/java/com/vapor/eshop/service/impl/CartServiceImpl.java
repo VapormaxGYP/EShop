@@ -162,22 +162,28 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     }
 
     @Override
-    public Result<?> deleteCartRecord(String jwt, Integer productId) {
-        if(productId == 0)
+    public Result<?> deleteCartRecord(String jwt, Integer[] productIds) {
+        if(productIds.length == 0)
             throw new EshopException(ResponseEnum.EMPTY_PRODUCT_ID);
+
         Map<String, Claim> map = JWTUtils.verifyAndGetClaims(jwt);
         Integer userId = map.get("userId").asInt();
 
+        Result<Object> result = new Result<>();
+        for(int productId : productIds){
+            delete(productId, userId);
+        }
+
+        result.setCode(0);
+        result.setMsg("Success Delete Record");
+        return result;
+    }
+    public void delete(Integer productId, Integer userId){
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId).eq("product_id", productId);
         Cart record = this.cartMapper.selectOne(queryWrapper);
         if(record == null)
             throw new EshopException(ResponseEnum.NO_SUCH_RECORD);
         this.cartMapper.delete(queryWrapper);
-
-        Result<Object> result = new Result<>();
-        result.setCode(0);
-        result.setMsg("Success Delete Cart Record");
-        return result;
     }
 }
