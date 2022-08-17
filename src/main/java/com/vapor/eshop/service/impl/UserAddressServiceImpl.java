@@ -16,6 +16,7 @@ import com.vapor.eshop.service.UserAddressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vapor.eshop.utils.JWTUtils;
 import com.vapor.eshop.vo.UserAddressListVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
  * @since 2022-08-10
  */
 @Service
+@Slf4j
 public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserAddress> implements UserAddressService {
 
     @Autowired
@@ -123,6 +125,7 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
                 updateWrapper.eq("address_id", userAddress.getAddressId())
                         .set("is_default", 0);
                 this.userAddressMapper.update(userAddress, updateWrapper);
+                log.info("UPDATE EXEC");
             }
         }
 
@@ -132,6 +135,8 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
                 .set("is_default",isDefault);
 
         this.userAddressMapper.update(new UserAddress(), updateWrapper);
+        log.info("Update EXEC");
+
         Result<Object> result = new Result<>();
         result.setCode(0);
         result.setMsg("Success Update User Address");
