@@ -23,7 +23,8 @@ public enum ResponseEnum {
     ADDRESS_ALREADY_EXIST(454, "Address Already Exist"),
     EMPTY_UPDATE_ADDRESS(455, "Update Address Form Empty"),
     NO_SUCH_ADDRESS(456, "No Such Address Record"),
-    EMPTY_ADDRESS_ID(457, "Empty Address ID for Delete");
+    EMPTY_ADDRESS_ID(457, "Empty Address ID for Delete"),
+    EMPTY_INFO_TO_GENERATE_ORDER(458, "Empty Form to Generate Order");
     private Integer code;
     private String msg;
 

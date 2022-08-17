@@ -4,12 +4,15 @@ import com.auth0.jwt.interfaces.Claim;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.vapor.eshop.entity.Cart;
+import com.vapor.eshop.entity.Order;
 import com.vapor.eshop.entity.ProductInfo;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.errors.ResponseEnum;
 import com.vapor.eshop.exception.EshopException;
+import com.vapor.eshop.form.GenerateOrderForm;
 import com.vapor.eshop.form.ProductToCartForm;
 import com.vapor.eshop.mapper.CartMapper;
+import com.vapor.eshop.mapper.OrderMapper;
 import com.vapor.eshop.mapper.ProductInfoMapper;
 import com.vapor.eshop.service.CartService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -40,6 +43,9 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     private CartMapper cartMapper;
     @Autowired
     private ProductInfoMapper productInfoMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     @Override
     public Result<?> AddToCart(String jwt, ProductToCartForm productToCartForm) {
@@ -185,5 +191,27 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         if(record == null)
             throw new EshopException(ResponseEnum.NO_SUCH_RECORD);
         this.cartMapper.delete(queryWrapper);
+    }
+
+    @Override
+    public Result<?> generateOrder(String jwt, GenerateOrderForm form) {
+        Map<String, Claim> map = JWTUtils.verifyAndGetClaims(jwt);
+        Integer userId = map.get("userId").asInt();
+        String loginName = map.get("loginName").asString();
+
+        Order insertOrder = new Order();
+        insertOrder.setUserId(userId);
+        insertOrder.setLoginName(loginName);
+        insertOrder.setOrderCost(form.getTotalCost());
+        insertOrder.setUserAddress(form.getAddress());
+        insertOrder.setOrderNo(form.getOrderDate());
+
+        this.orderMapper.insert(insertOrder);
+
+        Result<Object> result = new Result<>();
+        result.setCode(0);
+        result.setMsg("Success Generate Order");
+
+        return result;
     }
 }

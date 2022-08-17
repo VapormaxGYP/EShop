@@ -4,6 +4,7 @@ package com.vapor.eshop.controller;
 import com.vapor.eshop.entity.Result;
 import com.vapor.eshop.errors.ResponseEnum;
 import com.vapor.eshop.exception.EshopException;
+import com.vapor.eshop.form.GenerateOrderForm;
 import com.vapor.eshop.form.ProductToCartForm;
 import com.vapor.eshop.service.CartService;
 import lombok.extern.slf4j.Slf4j;
@@ -58,9 +59,21 @@ public class CartController {
     }
 
     @DeleteMapping("/deleteCartRecord")
-    public Result<?> deleteCartRecord(@RequestHeader("Authorization") String jwt, @RequestBody Integer[] productIds){
+    public Result<?> deleteCartRecord(@RequestHeader("Authorization") String jwt,
+                                      @RequestBody Integer[] productIds){
 
         return cartService.deleteCartRecord(jwt, productIds);
+    }
+
+    @PostMapping("/generateOrder")
+    public Result<?> generateOrder(@RequestHeader("Authorization") String jwt,
+                                   @RequestBody GenerateOrderForm form,
+                                   BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new EshopException(ResponseEnum.EMPTY_INFO_TO_GENERATE_ORDER);
+        }
+
+        return cartService.generateOrder(jwt, form);
     }
 
 }
