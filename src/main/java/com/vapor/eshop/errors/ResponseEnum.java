@@ -17,7 +17,13 @@ public enum ResponseEnum {
     OUT_OF_STOCK(448, "Count is Larger than Stock"),
     PRODUCT_TO_CART_FORM_EMPTY(449, "Product Add to Cart form Empty"),
     ILLEGAL_COUNT(450, "Count Number is Illegal"),
-    NO_SUCH_RECORD(451, "No Such Cart Record");
+    NO_SUCH_RECORD(451, "No Such Cart Record"),
+    USER_ADD_ADDRESS(452,"Have Empty info"),
+    INSERT_ADDRESS_ERROR(453, "Insert Address Error"),
+    ADDRESS_ALREADY_EXIST(454, "Address Already Exist"),
+    EMPTY_UPDATE_ADDRESS(455, "Update Address Form Empty"),
+    NO_SUCH_ADDRESS(456, "No Such Address Record"),
+    EMPTY_ADDRESS_ID(457, "Empty Address ID for Delete");
     private Integer code;
     private String msg;
 
