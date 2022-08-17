@@ -110,13 +110,13 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
         if(this.userAddressMapper.selectById(addressId) == null)
             throw new EshopException(ResponseEnum.NO_SUCH_ADDRESS);
 
-        if(isDefault == 1)
-        {
-            QueryWrapper<UserAddress> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("is_default", 1)
-                    .and(wrapper -> wrapper.eq("user_id", userId));
-            UserAddress userAddress = this.userAddressMapper.selectOne(queryWrapper);
+        QueryWrapper<UserAddress> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_default", 1)
+                .and(wrapper -> wrapper.eq("user_id", userId));
+        UserAddress userAddress = this.userAddressMapper.selectOne(queryWrapper);
 
+        if(isDefault == 1 && userAddress != null)
+        {
             if(userAddress.getAddressId() != addressId)
             {
                 UpdateWrapper<UserAddress> updateWrapper = new UpdateWrapper<>();
@@ -129,7 +129,7 @@ public class UserAddressServiceImpl extends ServiceImpl<UserAddressMapper, UserA
         UpdateWrapper<UserAddress> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("address_id", addressId)
                 .set("address", address)
-                .set("is_default", isDefault);
+                .set("is_default",isDefault);
 
         this.userAddressMapper.update(new UserAddress(), updateWrapper);
         Result<Object> result = new Result<>();
