@@ -51,6 +51,11 @@ public class UserController {
         return userService.getUserDetails(jwt);
     }
 
+    @GetMapping("/test")
+    public void test(@RequestParam(value = "para", required = true) Integer para){
+        System.out.println("Test");
+    }
+
 
 }
 

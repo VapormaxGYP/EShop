@@ -135,16 +135,14 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         List<Cart> cartList = this.cartMapper.selectList(queryWrapper);
         List<CartVO> voList = new ArrayList<>();
 
-        if(cartList.size() == 0)
+        if(cartList.isEmpty())
         {
             result.setCode(0);
             result.setMsg("You have no Cart Record");
             return result;
         }
 
-        Iterator<Cart> iterator = cartList.iterator();
-        while (iterator.hasNext()) {
-            Cart cart = iterator.next();
+        for (Cart cart : cartList) {
             Integer productId = cart.getProductId();
 
             ProductInfo product = this.productInfoMapper.selectById(productId);
@@ -214,4 +212,5 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 
         return result;
     }
+
 }
